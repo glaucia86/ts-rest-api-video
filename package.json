@@ -8,7 +8,7 @@
     "build": "rimraf build && tsc",
     "preserve": "npm run build",
     "pre:dev": "npm run swagger",
-    "dev": "cross-env NODE_ENV=development concurrently \"nodemon\" \"nodemon -x tsoa spec\"",
+    "dev": "npm run build && cross-env NODE_ENV=development concurrently \"nodemon\" \"nodemon -x tsoa spec\"",
     "start": "cross-env NODE_ENV=production node build/index.js",
     "swagger": "tsoa spec",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -40,6 +40,6 @@
       "src"
     ],
     "ext": "ts",
-    "exec": "ts-node src/index.ts"
+    "exec": "npx ts-node src/index.ts"
   }
 }
