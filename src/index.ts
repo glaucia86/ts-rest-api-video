@@ -12,11 +12,11 @@ import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 
 import Router from './routes';
+import AppDataSource from './typeorm/data-source';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-
 const app: Application = express();
 
 app.use(helmet());
@@ -37,6 +37,13 @@ app.use(
 
 app.use(Router);
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+(async () => {
+  await AppDataSource.initialize().catch((err) => {
+    console.log("Error connecting to the database: ", err);
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+  });
 });
+
